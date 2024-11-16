@@ -20,3 +20,4 @@ class CustomCollator(object):
         batch_new['labels'] = torch.LongTensor([item['labels'] for item in batch])
 
         return batch_new
+        
