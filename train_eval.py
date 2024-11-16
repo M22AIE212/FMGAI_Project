@@ -130,6 +130,6 @@ def train_and_validate(model, train_dataloader, val_dataloader, epochs, device, 
     df_train_loss = pd.DataFrame(train_loss_list,columns = ['loss'])
     df_val_loss = pd.DataFrame(val_loss_list,columns = ['loss'])
     
-    df_train_loss.to_csv(f"loss_{fusion}.csv")
-    df_val_loss.to_csv(f"loss_{fusion}.csv")
+    df_train_loss.to_csv(f"train_loss_{fusion}.csv")
+    df_val_loss.to_csv(f"val_loss_{fusion}.csv")
     print(f"Training complete. Best Validation Accuracy: {best_val_accuracy:.4f}")
