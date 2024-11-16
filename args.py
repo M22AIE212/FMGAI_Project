@@ -20,3 +20,4 @@ class Arguments :
         self.freeze_text_encoder = True
         self.num_class = 34
         self.gpus = [0,1,2,3]
+        self.epochs = 10
