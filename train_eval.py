@@ -23,7 +23,8 @@ def train_and_validate(model, train_dataloader, val_dataloader, epochs, device, 
 
     # Trackers for loss and accuracy
     best_val_accuracy = 0.0
-    loss_list = []
+    val_loss_list = []
+    train_loss_list = []
     # Loop over epochs
     for epoch in range(epochs):
         print(f"\nEpoch {epoch + 1}/{epochs}")
@@ -76,6 +77,7 @@ def train_and_validate(model, train_dataloader, val_dataloader, epochs, device, 
         # Calculate train accuracy
         train_accuracy = accuracy_score(train_labels, train_preds)
         print(f"Epoch {epoch + 1} Training Loss: {total_train_loss / len(train_dataloader):.4f}")
+        train_loss_list.append(total_train_loss / len(train_dataloader))
         print(f"Epoch {epoch + 1} Training Accuracy: {train_accuracy:.4f}")
 
         # Validation phase
@@ -113,7 +115,7 @@ def train_and_validate(model, train_dataloader, val_dataloader, epochs, device, 
         # Calculate validation accuracy
         val_accuracy = accuracy_score(val_labels, val_preds)
         print(f"Epoch {epoch + 1} Validation Loss: {total_val_loss / len(val_dataloader):.4f}")
-        loss_list.append(total_val_loss / len(val_dataloader))
+        val_loss_list.append(total_val_loss / len(val_dataloader))
         print(f"Epoch {epoch + 1} Validation Accuracy: {val_accuracy:.4f}")
 
         # Save the best model
@@ -125,6 +127,9 @@ def train_and_validate(model, train_dataloader, val_dataloader, epochs, device, 
             best_model_state = deepcopy(model.state_dict())
             torch.save(best_model_state, f"./best_model_{fusion}.pth")
             print(f"Best model saved with validation accuracy: {best_val_accuracy:.4f}")
-    df_loss = pd.DataFrame(loss_list,columns = ['loss'])
-    df_loss.to_csv(f"loss_{fusion}.csv")
+    df_train_loss = pd.DataFrame(train_loss_list,columns = ['loss'])
+    df_val_loss = pd.DataFrame(val_loss_list,columns = ['loss'])
+    
+    df_train_loss.to_csv(f"loss_{fusion}.csv")
+    df_val_loss.to_csv(f"loss_{fusion}.csv")
     print(f"Training complete. Best Validation Accuracy: {best_val_accuracy:.4f}")
