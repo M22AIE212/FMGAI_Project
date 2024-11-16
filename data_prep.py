@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+import pickle
 
 # Path to the folder containing .json.gz files
 image_metadata = pd.read_csv("./abo-images-small/images/metadata/images.csv.gz")
@@ -72,6 +73,8 @@ ecomm_data_final = pd.merge(ecomm_data,image_metadata[['image_id','path']],on = 
 
 label_encoder = LabelEncoder()
 ecomm_data_final['label'] = label_encoder.fit_transform(ecomm_data_final[strat_column])
+with open("./label_encoder.pkl", 'wb') as f:
+    pickle.dump(label_encoder, f)
 
 train_data, temp_data = train_test_split(ecomm_data_final,
                                          stratify=ecomm_data_final[strat_column],
