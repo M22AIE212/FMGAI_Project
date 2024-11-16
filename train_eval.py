@@ -126,5 +126,5 @@ def train_and_validate(model, train_dataloader, val_dataloader, epochs, device, 
             torch.save(best_model_state, f"./best_model_{fusion}.pth")
             print(f"Best model saved with validation accuracy: {best_val_accuracy:.4f}")
     df_loss = pd.DataFrame(loss_list,columns = ['loss'])
-    df_loss.to_csv(f"loss_{fusion}")
+    df_loss.to_csv(f"loss_{fusion}.csv")
     print(f"Training complete. Best Validation Accuracy: {best_val_accuracy:.4f}")
